@@ -2,14 +2,20 @@
 #include <iostream>
 using namespace std;
 
-void bubbleSort( string*, int* );
+int displayMenu();
 void fillNames( string*, int* );
 bool isSorted( string* );
+void bubbleSort( string*, int* );
 void printStrings( string*, int* );
 
 const int MAX = 10;
 
 int main( int argc, char* argv[] ) {
+  displayMenu();
+  return 0;
+}
+
+int displayMenu() {
   int choice;
   string names[ MAX ];
   int marks[ MAX ];
@@ -32,38 +38,9 @@ int main( int argc, char* argv[] ) {
       printStrings( names, marks );
       break;
     }
-  } while( choice != 3 );
+  } while ( choice != 3 );
 
   return 0;
-}
-
-void bubbleSort( string* names, int* marks ) {
-  bool flag;
-  string name;
-  int mark;
-  int i = 1;
-
-  do {
-    flag = false;
-
-    for ( int j = 0; j < MAX - i; j++ ) {
-      cout << names[ j + 1 ] << " <? " << names[ j ] << endl;
-      if ( names[ j + 1 ] < names[ j ] ) {
-        cout << "Scambio " << names[ j + 1 ] << " con " << names[ j ] << endl;
-        name = names[ j ];
-        names[ j ] = names[ j + 1 ];
-        names[ j + 1 ] = name;
-
-        mark = marks[ j ];
-        marks[ j ] = marks[ j + 1 ];
-        marks[ j + 1 ] = mark;
-
-        flag = true;
-      }
-    }
-
-    ++i;
-  } while ( flag );
 }
 
 void fillNames( string* names, int* marks ) {
@@ -79,6 +56,34 @@ bool isSorted( string* names ) {
     if ( names[ i + 1 ] < names[ i ] ) return false;
 
   return true;
+}
+
+void bubbleSort( string* names, int* marks ) {
+  bool flag;
+  string name;
+  int mark;
+
+  int i = 1;
+
+  do {
+    flag = false;
+
+    for ( int j = 0; j < MAX - i; j++ )
+      if ( names[ j + 1 ] < names[ j ] ) {
+        // Scambio `names[ j ]` con `names[ j + 1 ]`
+        name = names[ j ];
+        names[ j ] = names[ j + 1 ];
+        names[ j + 1 ] = name;
+
+        mark = marks[ j ];
+        marks[ j ] = marks[ j + 1 ];
+        marks[ j + 1 ] = mark;
+
+        flag = true;
+      }
+
+    ++i;
+  } while ( flag );
 }
 
 void printStrings( string* names, int* marks ) {
